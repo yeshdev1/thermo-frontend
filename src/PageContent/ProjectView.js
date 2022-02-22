@@ -86,7 +86,9 @@ const Info = () => {
     )
 }
 
-export default () => {
+export default ({
+    changePage
+}) => {
     const [view,setView] = useState(COMMENTS);
     return (
         <>

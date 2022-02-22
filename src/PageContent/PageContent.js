@@ -6,28 +6,35 @@ import { useState } from 'react';
 import React from 'react';
 
 const PageContent = (props) => {
-    const [current,setCurrentPage] = useState(PROJECT_VIEW);
+    const [current,setCurrentPage] = useState(LANDING_PAGE);
     const changePage = (currentPageName) => {
+        console.log(currentPageName)
         setCurrentPage(currentPageName)
     }
     switch (current) {
         case PROJECT_VIEW:
             return (
                 <>
-                    <ProjectView />
+                    <ProjectView
+                        changePage={changePage}
+                    />
                 </>
             )
         case CANINE_DESCRIPTION_PAGE:
             return (
                 <>
-                    <SummaryView />
+                    <SummaryView
+                        changePage={changePage}
+                    />
                 </>
             )
         case LANDING_PAGE:
         default:
             return (
                 <>
-                    <LandingPage changePage={changePage} />
+                    <LandingPage
+                        changePage={changePage}
+                    />
                 </>
             )
     }

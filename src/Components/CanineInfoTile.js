@@ -12,7 +12,7 @@ function CanineInfoTile (props) {
                 <div className="Content">
                     <ImageTile />
                     <Status />
-                    <Recents onClickSummary={props.onClickSummary}/>
+                    <Recents onClickSummary={props.onClickSummary} onClickContent={props.onClickContent} />
                     <PersonnelAssigned />
                 </div>
             </div>

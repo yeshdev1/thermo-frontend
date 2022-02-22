@@ -29,10 +29,10 @@ const ProjectsList = (props) => {
                     <td>120</td>
                     <td>10/22/2021</td>
                     <td>
-                        <button className="button" onClick={onClickSummary} >Summary</button>
+                        <button className="button" onClick={onClickSummary}>Summary</button>
                     </td>
                     <td>
-                        <button className="button">Content</button>
+                        <button className="button" onClick={onContentClick}>Content</button>
                     </td>
                     </tr>
                     <tr>
@@ -43,10 +43,10 @@ const ProjectsList = (props) => {
                     <td>120</td>
                     <td>10/26/2021</td>
                     <td>
-                        <button className="button">Summary</button>
+                        <button className="button" onClick={onClickSummary}>Summary</button>
                     </td>
                     <td>
-                        <button className="button">Content</button>
+                        <button className="button" onClick={onContentClick}>Content</button>
                     </td>
                     </tr>
                     <tr>
@@ -57,10 +57,10 @@ const ProjectsList = (props) => {
                     <td>120</td>
                     <td>10/30/2021</td>
                     <td>
-                        <button className="button">Summary</button>
+                        <button className="button" onClick={onClickSummary}>Summary</button>
                     </td>
                     <td>
-                        <button className="button">Content</button>
+                        <button className="button" onClick={onContentClick}>Content</button>
                     </td>
                     </tr>
                 </tbody>
