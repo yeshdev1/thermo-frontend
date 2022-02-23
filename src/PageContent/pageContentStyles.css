@@ -119,13 +119,14 @@
 }
 
 .floater-section-left {
-    width: 60%;
+    width: 62%;
     float: left;
     margin-left: 12px;
+    border-right: 1px solid #F0F0F0;
 }
 
 .floater-section-right {
-    width:25%;
+    width:23%;
     float: left;
 }
 
