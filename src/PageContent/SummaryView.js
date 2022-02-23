@@ -1,19 +1,19 @@
-import { Navbar, Container, Nav, NavDropdown,Table } from "react-bootstrap"
+import { Navbar, Container, Nav, NavDropdown,Table, Button } from "react-bootstrap"
 import ProjectInfo from '../Components/ProjectInfo';
 import React from 'react';
 
 const MakeSendButtons = () => {
     return (
         <div className="pull-togethor">
-            <button>
+            <Button variant="secondary"  className="margins">
                 Send to Review
-            </button>
-            <button>
+            </Button>
+            <Button variant="secondary"  className="margins">
                 Send to Approval
-            </button>
-            <button>
+            </Button>
+            <Button variant="secondary"  className="margins">
                 Send to Publish
-            </button>
+            </Button>
         </div>
     )
 }
@@ -22,20 +22,18 @@ const SelectAndSendData = () => {
     return (
         <Navbar bg="light" variant="light" expand="sm">
             <Container fluid>
-                <Navbar.Brand href="#home">
-                    <MakeSendButtons />
-                </Navbar.Brand>
+                <MakeSendButtons />
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                 </Nav>
                 <Nav>
                     <Navbar.Text><b>Status: </b></Navbar.Text>
-                    <NavDropdown title="All" id="basic-nav-dropdown">
+                    <NavDropdown title="All" id="collasible-nav-dropdown" variant="secondary">
                     <NavDropdown.Item href="#action/3.1">Canine</NavDropdown.Item>
                     </NavDropdown>
                     <Navbar.Text><b>Updated By: </b></Navbar.Text>
-                    <NavDropdown title="All" id="basic-nav-dropdown">
+                    <NavDropdown title="All" id="collasible-nav-dropdown" variant="secondary">
                     <NavDropdown.Item href="#action/3.1">Canine TD v2</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
@@ -124,15 +122,15 @@ export default () => {
                     </Nav>
                     <Nav>
                         <Navbar.Text><b>Species: </b></Navbar.Text>
-                        <NavDropdown title="Canine" id="basic-nav-dropdown">
+                        <NavDropdown title="Canine" id="collasible-nav-dropdown" variant="secondary">
                         <NavDropdown.Item href="#action/3.1">Canine</NavDropdown.Item>
                         </NavDropdown>
                         <Navbar.Text><b>Product: </b></Navbar.Text>
-                        <NavDropdown title="Canine TD v2" id="basic-nav-dropdown">
+                        <NavDropdown title="Canine TD v2" id="collasible-nav-dropdown" variant="secondary">
                         <NavDropdown.Item href="#action/3.1">Canine TD v2</NavDropdown.Item>
                         </NavDropdown>
                         <Navbar.Text><b>Project: </b></Navbar.Text>
-                        <NavDropdown title="Canine TD v2 c2" id="basic-nav-dropdown">
+                        <NavDropdown title="Canine TD v2 c2" id="collasible-nav-dropdown" variant="secondary">
                         <NavDropdown.Item href="#action/3.1">Canine TD v2 c2</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

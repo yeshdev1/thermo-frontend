@@ -4,7 +4,7 @@ import React from 'react';
 const ProjectsList = (props) => {
     const {
         onClickSummary,
-        onContentClick
+        onClickContent
     } = props;
     return (
         <div>
@@ -32,7 +32,7 @@ const ProjectsList = (props) => {
                         <button className="button" onClick={onClickSummary}>Summary</button>
                     </td>
                     <td>
-                        <button className="button" onClick={onContentClick}>Content</button>
+                        <button className="button" onClick={onClickContent}>Content</button>
                     </td>
                     </tr>
                     <tr>
@@ -46,7 +46,7 @@ const ProjectsList = (props) => {
                         <button className="button" onClick={onClickSummary}>Summary</button>
                     </td>
                     <td>
-                        <button className="button" onClick={onContentClick}>Content</button>
+                        <button className="button" onClick={onClickContent}>Content</button>
                     </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@ const ProjectsList = (props) => {
                         <button className="button" onClick={onClickSummary}>Summary</button>
                     </td>
                     <td>
-                        <button className="button" onClick={onContentClick}>Content</button>
+                        <button className="button" onClick={onClickContent}>Content</button>
                     </td>
                     </tr>
                 </tbody>
