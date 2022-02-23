@@ -1,12 +1,15 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import React from 'react';
 import logo from '../Images/logo.jpeg';
+import { LANDING_PAGE } from '../Strings/strings';
 
-function NavBarComponent() {
+function NavBarComponent({
+    setCurrentPage
+}) {
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container fluid>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="#home" onClick={() => setCurrentPage(LANDING_PAGE)}>
                     <img
                         alt=""
                         src={logo}

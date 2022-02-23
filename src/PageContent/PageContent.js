@@ -5,13 +5,14 @@ import ProjectView from "./ProjectView";
 import { useState } from 'react';
 import React from 'react';
 
-const PageContent = (props) => {
-    const [current,setCurrentPage] = useState(LANDING_PAGE);
+const PageContent = ({
+    currentPage,
+    setCurrentPage
+}) => {
     const changePage = (currentPageName) => {
-        console.log(currentPageName)
         setCurrentPage(currentPageName)
     }
-    switch (current) {
+    switch (currentPage) {
         case PROJECT_VIEW:
             return (
                 <>

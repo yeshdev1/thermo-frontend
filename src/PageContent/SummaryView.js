@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav, NavDropdown,Table, Button } from "react-bootstrap"
 import ProjectInfo from '../Components/ProjectInfo';
 import React from 'react';
+import { PROJECT_VIEW } from "../Strings/strings";
 
 const MakeSendButtons = () => {
     return (
@@ -108,7 +109,9 @@ const DataTable = () => {
     );
 }
 
-export default () => {
+export default ({
+    changePage
+}) => {
     return (
         <>
             <Navbar bg="light" variant="light" expand="sm">
@@ -154,7 +157,7 @@ export default () => {
                     <button className="fat-button">
                         Publish Project
                     </button>
-                    <button className="fat-button">
+                    <button className="fat-button" onClick={() => changePage(PROJECT_VIEW)}>
                         Content View
                     </button>
                 </div>
