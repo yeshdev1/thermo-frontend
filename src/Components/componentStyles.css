@@ -26,7 +26,7 @@
 .Status {
     width: 18%;
     height: 90%;
-    background-color: #D3D3D3;
+    background-color: #F0F0F0;
     text-align: left;
     padding:2px;
 }
@@ -34,7 +34,7 @@
 .Recents {
     width: 40%;
     height: 90%;
-    background-color: #D3D3D3;
+    background-color: #F0F0F0;
     text-align: left;
     padding:2px;
 }
@@ -42,7 +42,7 @@
 .PersonnelAssignedTile {
     width: 20%;
     height: 90%;
-    background-color: #D3D3D3;
+    background-color: #F0F0F0;
     text-align: left;
     padding:2px;
 }

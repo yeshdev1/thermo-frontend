@@ -5,13 +5,13 @@ import React from 'react';
 const MakeSendButtons = () => {
     return (
         <div className="pull-togethor">
-            <Button variant="secondary"  className="margins">
+            <Button className="margins default-button">
                 Send to Review
             </Button>
-            <Button variant="secondary"  className="margins">
+            <Button className="margins default-button">
                 Send to Approval
             </Button>
-            <Button variant="secondary"  className="margins">
+            <Button className="margins default-button">
                 Send to Publish
             </Button>
         </div>
@@ -21,12 +21,12 @@ const MakeSendButtons = () => {
 const SelectAndSendData = () => {
     return (
         <Navbar bg="light" variant="light" expand="sm">
-            <Container fluid>
-                <MakeSendButtons />
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                </Nav>
+            <MakeSendButtons />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+            </Nav>
+            <div className="margins">
                 <Nav>
                     <Navbar.Text><b>Status: </b></Navbar.Text>
                     <NavDropdown title="All" id="collasible-nav-dropdown" variant="secondary">
@@ -37,8 +37,8 @@ const SelectAndSendData = () => {
                     <NavDropdown.Item href="#action/3.1">Canine TD v2</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
-                </Navbar.Collapse>
-            </Container>
+            </div>
+            </Navbar.Collapse>
         </Navbar>
     );
 }
@@ -114,7 +114,7 @@ export default () => {
             <Navbar bg="light" variant="light" expand="sm">
                 <Container fluid>
                     <Navbar.Brand href="#home">
-                        Select Project to view Summary
+                        Project Summary View
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -137,21 +137,27 @@ export default () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className="pull-apart margins">
-                <b>
-                    Project Summary View:
-                    <div>
-                        Canine TD v2 
+            <div className="pull-between">
+                <div>
+                    <div className="margins">
+                        Canine:
+                        <b>
+                            <div>
+                                Canine TD v2 
+                            </div>
+                        </b>
                     </div>
-                </b>
-                <button className="fat-button">
-                    Publish Project
-                </button>
-                <button className="fat-button">
-                    Content View
-                </button>
+                    <ProjectInfo />
+                </div>
+                <div className="pull-down">
+                    <button className="fat-button">
+                        Publish Project
+                    </button>
+                    <button className="fat-button">
+                        Content View
+                    </button>
+                </div>
             </div>
-            <ProjectInfo />
             <SelectAndSendData />
             <DataTable />
         </>

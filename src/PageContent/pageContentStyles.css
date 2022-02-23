@@ -1,3 +1,26 @@
+.list-item {
+    cursor: pointer;
+}
+
+.tile {
+    min-width: 100px;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #F0F0F0;
+}
+
+.default-button {
+    min-width: 120px;
+    min-height: 40px;
+    color: black;
+    border-radius: 4px;
+    border: none;
+    background-color: #F0F0F0;
+    font-weight: bold;
+    padding: 10px;
+}
+
 .Container {
     text-align: center;
 }
@@ -6,19 +29,34 @@
     margin: 20px;
 }
 
+.small-margins {
+    margin: 5px;
+}
+
 .pull-apart {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-#basic-nav-dropdown {
-    background-color: #0d6efd;
-    margin: 5px;
-    border-radius: 10px;
-    min-width: 100px;
-    text-align: center;
+.pull-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.parent-project-info {
+    text-color: grey;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.child-project-info {
+    text-color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 
 .fat-button {
     padding: 5px;
@@ -26,6 +64,8 @@
     font-size: 14px;
     width: 100px;
     height: 100px;
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .pull-down {

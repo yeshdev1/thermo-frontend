@@ -3,16 +3,30 @@ import './pageContentStyles.css';
 import ProjectInfo from '../Components/ProjectInfo';
 import { ListGroup } from 'react-bootstrap';
 import { useState } from 'react';
-import { COMMENTS, WEBLINKS, ARTICLES, REVIEW } from '../Strings/strings';
+import { COMMENTS, WEBLINKS, ARTICLES, REVIEW, LANDING_PAGE } from '../Strings/strings';
 import React from 'react';
+
+const groups = [
+    "AGSCTD002",
+    "AGSCTD006",
+    "AGSCTD010",
+    "AGSCTD011",
+    "AGSCTD012",
+    "AGSCTD002",
+    "AGSCTD006",
+    "AGSCTD010",
+    "AGSCTD011",
+    "AGSCTD012",
+    "AGSCTD002",
+    "AGSCTD006",
+    "AGSCTD010"
+];
 
 const DefinitionTile = () => {
     return (
         <div>
             <div>Project View</div>
             <div className="header-size">Canine TD v1 2.0</div>
-            <div>Species: Canine</div>
-            <div>Product: Canine TD v1</div>
         </div>
     )
 }
@@ -79,7 +93,7 @@ const Info = () => {
                     </div>
                 </div>
             </div>
-            <button>
+            <button className="default-button">
                 Send to Review
             </button>            
         </div>
@@ -90,12 +104,13 @@ export default ({
     changePage
 }) => {
     const [view,setView] = useState(COMMENTS);
+    const [active,setActive] = useState(0)
     return (
         <>
             <div className="pull-apart margins">
                 <DefinitionTile />
                 <ProjectInfo />
-                <button>
+                <button className="default-button" onClick={() => changePage(LANDING_PAGE)}>
                     Close View
                 </button>
             </div>
@@ -106,19 +121,16 @@ export default ({
                         Canine TD v1
                     </h4>
                     <ListGroup as="ul" className="custom-list-group">
-                        <ListGroup.Item as="li" active>AGSCTD002</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD006</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD010</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD011</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD012</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD002</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD006</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD010</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD011</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD012</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD002</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD006</ListGroup.Item>
-                        <ListGroup.Item as="li">AGSCTD010</ListGroup.Item>
+                        {groups.map((group,index) => {
+                            if (active === index) {
+                                return (
+                                    <ListGroup.Item as="li" active className="list-item">{group}</ListGroup.Item>
+                                )
+                            }
+                            return (
+                                <ListGroup.Item as="li" onClick={() => setActive(index)} className="list-item">{group}</ListGroup.Item>
+                            )
+                        })}
                     </ListGroup>
                 </div>
                 <Info />
