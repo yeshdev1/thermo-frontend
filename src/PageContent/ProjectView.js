@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { COMMENTS, WEBLINKS, ARTICLES, REVIEW, LANDING_PAGE } from '../Strings/strings';
 import React from 'react';
 import { InfoTile } from '../Components/ProjectInfo';
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
 
 const groups = [
     "AGSCTD002",
@@ -22,6 +24,91 @@ const groups = [
     "AGSCTD006",
     "AGSCTD010"
 ];
+
+const fieldNames = [
+    "Disease name",
+    "Severity",
+    "Breeds affected",
+    "Prevalence",
+    "Symptoms",
+    "Prognosis",
+    "Treatment And Management",
+    "Management"
+]
+
+const RenderField = ({
+    fieldName
+}) => (
+    <div className="pull-between small-margins">
+        <span className="field-name">{fieldName}</span>
+        <span><textarea rows="2" cols="50"></textarea></span>
+        <span>
+            <InfoTile>
+                <div className="parent-project-info">
+                    Last updated: Dec 11th, 2011 - 6:35 PM
+                </div>
+                <div className="parent-project-info">
+                    Updated by: Anuradha Udumudi
+                </div>
+            </InfoTile>
+        </span>
+    </div>
+)
+
+const FieldsSection = () => {
+    return (
+        <div>
+            <div className="pull-between margins">
+                <span>This space is for displaying messages</span>
+                <span>
+                    <button className="default-button">Save Fields</button>
+                </span>
+            </div>
+            {fieldNames.map(name => {
+                return (
+                    <RenderField
+                        fieldName={name}
+                    />
+                )
+            })}
+        </div>
+    )
+}
+
+const ToggleFunctions = () => {
+    const [value,setValue] = useState(0)
+    const handleChange = (index) => {
+        setValue(index)
+    }
+    return (
+        <div>
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="wrapped label tabs example"
+                variant="scrollable"
+                scrollButtons="auto"
+            >
+            <Tab value={0} label="Comments" onClick={() => handleChange(0)} />
+            <Tab value={1} label="Weblinks" onClick={() => handleChange(1)} />
+            <Tab value={2} label="Articles" onClick={() => handleChange(2)} />
+            </Tabs>
+        </div>
+    );
+}
+
+const SpecificContent = () => {
+    return (
+        <div>
+            <div className="floater-section-left">
+                <FieldsSection />
+            </div>
+            <div div className="floater-section-right">
+                <ToggleFunctions />
+            </div>
+        </div>
+    );
+}
 
 const DefinitionTile = () => {
     return (
@@ -162,6 +249,7 @@ export default ({
                     </ListGroup>
                 </div>
                 <Info />
+                <SpecificContent />
             </div>
         </>
     )

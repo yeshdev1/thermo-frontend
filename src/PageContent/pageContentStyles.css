@@ -16,7 +16,7 @@
     padding: 10px;
     border-radius: 4px;
     background-color: #F0F0F0;
-    margin-left: 305px;
+    margin-left: 200px;
 }
 
 .default-button {
@@ -113,7 +113,23 @@
 }
 
 .custom-list-group {
-    width: 20%;
+    width: 12%;
     min-height: 100px;
     float: left;
+}
+
+.floater-section-left {
+    width: 60%;
+    float: left;
+    margin-left: 12px;
+}
+
+.floater-section-right {
+    width:25%;
+    float: left;
+}
+
+.field-name {
+    font-size: 12px;
+    width: 100px;
 }
