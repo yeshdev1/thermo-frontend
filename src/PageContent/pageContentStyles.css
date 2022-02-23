@@ -3,11 +3,20 @@
 }
 
 .tile {
-    min-width: 100px;
-    min-height: 100px;
+    min-width: 329.078;
+    min-height: 128px;
     padding: 10px;
     border-radius: 4px;
     background-color: #F0F0F0;
+}
+
+.horizontal-tile {
+    min-width: 200px;
+    min-height: 130px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #F0F0F0;
+    margin-left: 305px;
 }
 
 .default-button {

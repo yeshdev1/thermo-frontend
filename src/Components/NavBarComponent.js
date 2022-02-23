@@ -1,5 +1,6 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import React from 'react';
+import logo from '../Images/logo.jpeg';
 
 function NavBarComponent() {
     return (
@@ -8,8 +9,8 @@ function NavBarComponent() {
                 <Navbar.Brand href="#home">
                     <img
                         alt=""
-                        src="/logo.svg"
-                        width="100"
+                        src={logo}
+                        width="120"
                         height="30"
                         className="d-inline-block align-top"
                     />{' '}

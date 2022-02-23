@@ -1,8 +1,9 @@
 import { Children } from "react";
 import '../PageContent/pageContentStyles.css';
 import React from 'react';
+import Progress from '../Images/progress.png';
 
-const InfoTile = ({children}) => {
+export const InfoTile = ({children}) => {
     return (
         <div className="pull-down small-margins">
             {children}
@@ -40,18 +41,34 @@ export default () => {
                 </div>
             </div>
             <div className="margins tile">
-                <InfoTile>
-                    Ready to Publish:   100
-                </InfoTile>
-                <InfoTile>
-                    In Approval:   20
-                </InfoTile>
-                <InfoTile>
-                    In Review:   20
-                </InfoTile>
-                <InfoTile>
-                    In Draft:   14
-                </InfoTile>
+                <div className="child-project-info">
+                    Project Status
+                </div>
+                <div className="pull-apart">
+                    <img className="Image" src={Progress}/>
+                    <div>
+                        <InfoTile>
+                            <span className="parent-project-info">
+                                Ready to Publish:   100
+                            </span>
+                        </InfoTile>
+                        <InfoTile>
+                            <span className="parent-project-info">
+                                In Approval:   20
+                            </span>
+                        </InfoTile>
+                        <InfoTile>
+                            <span className="parent-project-info">
+                                In Review:   20
+                            </span>
+                        </InfoTile>
+                        <InfoTile>
+                            <span className="parent-project-info">
+                                In Draft:   14
+                            </span>
+                        </InfoTile>
+                    </div>
+                </div>
             </div>
             <div className="margins tile">
                 <InfoTile>

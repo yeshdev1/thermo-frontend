@@ -121,7 +121,8 @@ export default () => {
                     <Nav className="me-auto">
                     </Nav>
                     <Nav>
-                        <Navbar.Text><b>Species: </b></Navbar.Text>
+                        <Navbar.Text><b>Select project to view summary:</b></Navbar.Text>
+                        <Navbar.Text><b> Species: </b></Navbar.Text>
                         <NavDropdown title="Canine" id="collasible-nav-dropdown" variant="secondary">
                         <NavDropdown.Item href="#action/3.1">Canine</NavDropdown.Item>
                         </NavDropdown>

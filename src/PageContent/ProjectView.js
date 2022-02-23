@@ -5,6 +5,7 @@ import { ListGroup } from 'react-bootstrap';
 import { useState } from 'react';
 import { COMMENTS, WEBLINKS, ARTICLES, REVIEW, LANDING_PAGE } from '../Strings/strings';
 import React from 'react';
+import { InfoTile } from '../Components/ProjectInfo';
 
 const groups = [
     "AGSCTD002",
@@ -51,51 +52,78 @@ const ColoredLine = (props) => {
 
 const Info = () => {
     return (
-        <div className="pull-apart">
+        <div className="pull-apart horizontal-tile">
             <div className="pull-apart">
-                <div className="pull-down margins">
-                    <div>
-                        AGSCTD002
-                    </div>
-                    <div>
-                        Marker Type: Disorder
-                    </div>
-                    <div>
-                        Category: Neuromuscular
-                    </div>
-                </div>
-                <div className="pull-down margins">
-                    <div>
-                        Last updated:  Dec 15th, 2021
-                    </div>
-                    <div>
-                        Updated by:  Srinivas Udumudi (Developer)
-                    </div>
-                    <div>
-                        Created date: Dec 01, 2021
-                    </div>
-                    <div>
-                        Current Status:  Draft
-                    </div>
-                </div>
-                <div className="pull-down margins">
-                    <div>
-                        Reviewed Date:             
-                    </div>
-                    <div>
-                        Reviewed by:           
-                    </div>
-                    <div>
-                        Approved Date:         
-                    </div>
-                    <div>
-                        Approved by:      
-                    </div>
-                </div>
+                <span>
+                    <InfoTile>
+                        <span className="parent-project-info">Marker</span>
+                        <span className="child-project-info">AGSCTD002</span>
+                    </InfoTile>
+                </span>
+            </div>
+            <div className="pull-apart">
+                <span>
+                    <InfoTile>
+                        <span className="parent-project-info">Marker Type</span>
+                        <span className="child-project-info">Disorder</span>
+                    </InfoTile>
+                    <InfoTile>
+                        <span className="parent-project-info">Category</span>
+                        <span className="child-project-info">Neuromuscular</span>
+                    </InfoTile>
+                </span>
+            </div>
+            <div className="pull-apart">
+                <span>
+                    <InfoTile>
+                        <span className="parent-project-info">Last updated</span>
+                        <span className="child-project-info">Dec 15th, 2021</span>
+                    </InfoTile>
+                    <InfoTile>
+                        <span className="parent-project-info">Updated by</span>
+                        <span className="child-project-info">Srinivas Udumudi (Developer)</span>
+                    </InfoTile>
+                </span>
+            </div>
+            <div className="pull-apart">
+                <span>
+                    <InfoTile>
+                        <span className="parent-project-info">Created date</span>
+                        <span className="child-project-info">Dec 01, 2021</span>
+                    </InfoTile>
+                    <InfoTile>
+                        <span className="parent-project-info">Current Status</span>
+                        <span className="child-project-info">Draft</span>
+                    </InfoTile>
+                </span>
+            </div>
+            <div className="pull-apart">
+                <span>
+                    <InfoTile>
+                        <span className="parent-project-info">Reviewed Date</span>
+                        <span className="child-project-info">   </span>
+                    </InfoTile>
+                    <InfoTile>
+                        <span className="parent-project-info">Reviewed by</span>
+                        <span className="child-project-info"></span>
+                    </InfoTile>
+                </span>
+            </div>
+            <div className="pull-apart">
+                <span>
+                    <InfoTile>
+                        <span className="parent-project-info">Approved Date</span>
+                        <span className-="child-project-info"></span>
+                    </InfoTile>
+                    <InfoTile>
+                        <span className="parent-project-info">Reviewed by</span>
+                        <span className-="child-project-info"></span>
+                    </InfoTile>
+                </span>
             </div>
             <button className="default-button">
                 Send to Review
-            </button>            
+            </button>       
         </div>
     )
 }
