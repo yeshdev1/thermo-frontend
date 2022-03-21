@@ -2,12 +2,13 @@
 import './pageContentStyles.css';
 import ProjectInfo from '../Components/ProjectInfo';
 import { ListGroup } from 'react-bootstrap';
-import { useState } from 'react';
 import { COMMENTS, WEBLINKS, ARTICLES, REVIEW, LANDING_PAGE } from '../Strings/strings';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { InfoTile } from '../Components/ProjectInfo';
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import { request } from "../Api/api";
+import '../App.css';
 
 const groups = [
     "AGSCTD002",
@@ -33,13 +34,13 @@ const fieldNames = [
     "Symptoms",
     "Prognosis",
     "Treatment And Management",
-    "Management"
+    "References"
 ]
 
 const RenderField = ({
     fieldName
 }) => (
-    <div className="pull-between small-margins">
+    <div className="pull-between small-margins section-background">
         <span className="field-name">{fieldName}</span>
         <span><textarea rows="2" cols="50"></textarea></span>
         <span>
@@ -216,15 +217,36 @@ const Info = () => {
 }
 
 export default ({
-    changePage
+    changePage,
+    projectId
 }) => {
+    if (projectId === null || projectId === undefined) return null;
     const [view,setView] = useState(COMMENTS);
     const [active,setActive] = useState(0)
+    const [data, setChangedData] = useState([])
+    useEffect(() => {
+        console.log([projectId])
+        request('GET', "http://202.153.40.2:9500/MCDS/mcds/API/project-content?projectId=" + projectId, setChangedData)
+    }, [])
+    useEffect(() => {
+        console.log(data)
+    }, [data])
+    if (data.length !== 0) {
+    console.log(data)
     return (
         <>
             <div className="pull-apart margins">
                 <DefinitionTile />
-                <ProjectInfo />
+                <ProjectInfo
+                    projectStatus={data[0].projectStatus}
+                    lastUpdated={data[0].lastUpdatedDate}
+                    createdDate={data[0].createdDate}
+                    updatedBy={data[0].updatedBy}
+                    productPanel={data[0].productPanel}
+                    parentProject={data[0].parentProject}
+                    teamData={data[0].teamData}
+                    statusData={data[0].statusData}
+                />
                 <button className="default-button" onClick={() => changePage(LANDING_PAGE)}>
                     Close View
                 </button>
@@ -252,5 +274,6 @@ export default ({
                 <SpecificContent />
             </div>
         </>
-    )
+    )}
+    return (<div id="loader"></div>);
 }

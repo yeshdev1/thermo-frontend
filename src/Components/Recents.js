@@ -7,7 +7,11 @@ const Recents = (props) => {
     return (
         <div className="Recents">
             <div className="header-size">Most Recent Projects</div>
-            <ProjectsList onClickSummary={props.onClickSummary} onClickContent={props.onClickContent}/>
+            <ProjectsList 
+                onClickSummary={props.onClickSummary} 
+                onClickContent={props.onClickContent} 
+                data={props.data} 
+            />
         </div>
     )
 }

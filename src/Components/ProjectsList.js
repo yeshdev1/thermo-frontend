@@ -6,6 +6,23 @@ const ProjectsList = (props) => {
         onClickSummary,
         onClickContent
     } = props;
+    const makeRows = (data) => {
+        return data.map(node =>
+            <tr>
+            <td>{node.projectName}</td>
+            <td>{node.status}</td>
+            <td>{node.draft}</td>
+            <td>{node.review}</td>
+            <td>{node.approval}</td>
+            <td>{node.lastUpdated.split(/(\s+)/)[0]}</td>
+            <td>
+                <button className="button" onClick={() => onClickSummary(node.projectId)}>Summary</button>
+                <button className="button" onClick={() => onClickContent(node.projectId)}>Content</button>
+            </td>
+            </tr>
+        )
+    }
+    const data = props.data;
     return (
         <div>
             <Table striped hover responsive="sm">
@@ -21,48 +38,7 @@ const ProjectsList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>Canine TD v2 c2</td>
-                    <td>Open</td>
-                    <td>19</td>
-                    <td>15</td>
-                    <td>120</td>
-                    <td>10/22/2021</td>
-                    <td>
-                        <button className="button" onClick={onClickSummary}>Summary</button>
-                    </td>
-                    <td>
-                        <button className="button" onClick={onClickContent}>Content</button>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>Canine TD v2 c2</td>
-                    <td>Open</td>
-                    <td>19</td>
-                    <td>15</td>
-                    <td>120</td>
-                    <td>10/26/2021</td>
-                    <td>
-                        <button className="button" onClick={onClickSummary}>Summary</button>
-                    </td>
-                    <td>
-                        <button className="button" onClick={onClickContent}>Content</button>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>Canine TD v2 c2</td>
-                    <td>Open</td>
-                    <td>19</td>
-                    <td>15</td>
-                    <td>120</td>
-                    <td>10/30/2021</td>
-                    <td>
-                        <button className="button" onClick={onClickSummary}>Summary</button>
-                    </td>
-                    <td>
-                        <button className="button" onClick={onClickContent}>Content</button>
-                    </td>
-                    </tr>
+                    {makeRows(data)}
                 </tbody>
             </Table>
         </div>

@@ -11,31 +11,40 @@ export const InfoTile = ({children}) => {
     )
 }
 
-export default () => {
+export default ({
+    projectStatus="",
+    lastUpdated="",
+    createdDate="",
+    updatedBy="",
+    productPanel="",
+    parentProject="",
+    teamData={},
+    statusData={}
+}) => {
     return (
         <div className="pull-apart">
             <div className="margins tile">
                 <div className="pull-apart">
                     <span>
                         <InfoTile>
-                            <span className="parent-project-info">Project Status</span><span className="child-project-info">Draft</span>
+                            <span className="parent-project-info">Project Status</span><span className="child-project-info">{projectStatus}</span>
                         </InfoTile>
                         <InfoTile>
-                            <span className="parent-project-info">Project Status</span><span className="child-project-info">Dec 15th, 2021</span>
+                            <span className="parent-project-info">Last Updated</span><span className="child-project-info">{lastUpdated.split(/(\s+)/)[0]}</span>
                         </InfoTile>
                         <InfoTile>
-                            <span className="parent-project-info">Product Panel</span><span className="child-project-info">Canine TD v2</span>
+                            <span className="parent-project-info">Product Panel</span><span className="child-project-info">{productPanel}</span>
                         </InfoTile>
                     </span>
                     <span>
                         <InfoTile>
-                            <span className="parent-project-info">Updated by</span><span className="child-project-info">Srinivas Udumudi (Developer)</span>
+                            <span className="parent-project-info">Updated by</span><span className="child-project-info">{updatedBy}</span>
                         </InfoTile>
                         <InfoTile>
-                            <span className="parent-project-info">Created date</span><span className="child-project-info">Dec 01, 2021</span>
+                            <span className="parent-project-info">Created date</span><span className="child-project-info">{createdDate.split(/(\s+)/)[0]}</span>
                         </InfoTile>
                         <InfoTile>
-                            <span className="parent-project-info">Parent Project</span><span className="child-project-info">Draft</span>
+                            <span className="parent-project-info">Parent Project</span><span className="child-project-info">{parentProject}</span>
                         </InfoTile>
                     </span>
                 </div>
@@ -45,26 +54,26 @@ export default () => {
                     Project Status
                 </div>
                 <div className="pull-apart">
-                    <img className="Image" src={Progress}/>
+                    {/* <img className="Image" src={Progress}/> */}
                     <div>
                         <InfoTile>
                             <span className="parent-project-info">
-                                Ready to Publish:   100
+                                Ready to Publish:   {statusData.readyToPublish}
                             </span>
                         </InfoTile>
                         <InfoTile>
                             <span className="parent-project-info">
-                                In Approval:   20
+                                In Approval:   {statusData.inApproval}
                             </span>
                         </InfoTile>
                         <InfoTile>
                             <span className="parent-project-info">
-                                In Review:   20
+                                In Review:   {statusData.inReview}
                             </span>
                         </InfoTile>
                         <InfoTile>
                             <span className="parent-project-info">
-                                In Draft:   14
+                                In Draft:   {statusData.inDevelopment}
                             </span>
                         </InfoTile>
                     </div>
@@ -72,13 +81,13 @@ export default () => {
             </div>
             <div className="margins tile">
                 <InfoTile>
-                    <span className="parent-project-info">Approvers</span><span className="child-project-info">Dr Anu Udumudi</span>
+                    <span className="parent-project-info">Approvers</span><span className="child-project-info">{teamData !== undefined? teamData.approverList.join(', ') : ""}</span>
                 </InfoTile>
                 <InfoTile>
-                    <span className="parent-project-info">Reviewers</span><span className="child-project-info">Dr. Chaitra Lava</span>
+                    <span className="parent-project-info">Reviewers</span><span className="child-project-info">{teamData !== undefined? teamData.reviewerList.join(', ') : ""}</span>
                 </InfoTile>
                 <InfoTile>
-                    <span className="parent-project-info">Developers</span><span className="child-project-info">Padmaja K, Srinivas Udumudi</span>
+                    <span className="parent-project-info">Developers</span><span className="child-project-info">{teamData !== undefined? teamData.developerList.join(', ') : ""}</span>
                 </InfoTile>
             </div>
         </div>

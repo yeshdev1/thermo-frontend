@@ -6,14 +6,30 @@ import PersonnelAssigned from './PersonnelAssigned';
 import React from 'react';
 
 function CanineInfoTile (props) {
+    const {
+        products
+    } = props;
+
+    const renderTiles = (products) => {
+        return products.map(product => {
+            const activeProductData = product?.activeProduct || {}
+            const mostRecentProjectsData = product?.mostRecentProjects || []
+            return (
+                <>
+                    <ImageTile />
+                    <Status data={activeProductData} productId={product?.productId || null} />
+                    <Recents onClickSummary={props.onClickSummary} onClickContent={props.onClickContent} productId={product?.productId || null} data={mostRecentProjectsData} />
+                    <PersonnelAssigned data={product.userDetails} productId={product?.productId || null} />
+                </>
+            )
+        })
+    }
+
     return (
         <>
             <div className="Tile">
                 <div className="Content">
-                    <ImageTile />
-                    <Status />
-                    <Recents onClickSummary={props.onClickSummary} onClickContent={props.onClickContent} />
-                    <PersonnelAssigned />
+                    {renderTiles(products)}
                 </div>
             </div>
         </>

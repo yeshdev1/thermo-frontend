@@ -9,7 +9,9 @@ const PageContent = ({
     currentPage,
     setCurrentPage
 }) => {
-    const changePage = (currentPageName) => {
+    const [projectId,setProjectId] = useState(-1)
+    const changePage = (currentPageName, ...details) => {
+        setProjectId(details[0])
         setCurrentPage(currentPageName)
     }
     switch (currentPage) {
@@ -18,6 +20,7 @@ const PageContent = ({
                 <>
                     <ProjectView
                         changePage={changePage}
+                        projectId={projectId}
                     />
                 </>
             )
@@ -26,6 +29,7 @@ const PageContent = ({
                 <>
                     <SummaryView
                         changePage={changePage}
+                        projectId={projectId}
                     />
                 </>
             )

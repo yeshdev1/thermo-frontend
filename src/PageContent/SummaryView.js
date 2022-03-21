@@ -1,7 +1,10 @@
 import { Navbar, Container, Nav, NavDropdown,Table, Button } from "react-bootstrap"
 import ProjectInfo from '../Components/ProjectInfo';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PROJECT_VIEW } from "../Strings/strings";
+import { request } from "../Api/api";
+import { DataTable } from '../Components/DataTable';
+import '../App.css';
 
 const MakeSendButtons = () => {
     return (
@@ -44,74 +47,25 @@ const SelectAndSendData = () => {
     );
 }
 
-const DataTable = () => {
-    return (
-        <div className="margins">
-            <Table striped bordered bg="dark" vaiant="dark">
-            <thead>
-                    <tr>
-                    <th><input type="checkbox"></input></th>
-                    <th>Marker name</th>
-                    <th>Status</th>
-                    <th>Type</th>
-                    <th>Category</th>
-                    <th>Last Updated</th>
-                    <th>Updated By</th>
-                    <th>Reviewed</th>
-                    <th>Approved</th>
-                    <th>Gene</th>
-                    <th>Disorder Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>AGSCTD002</td>
-                    <td>Draft</td>
-                    <td>Disorder</td>
-                    <td>Neuromuscular</td>
-                    <td>01/10/2021</td>
-                    <td>Padmaja K</td>
-                    <td>01/10/2021</td>
-                    <td>01/10/2021</td>
-                    <td>TYRP1</td>
-                    <td>Ataxia, cerebellar, ATP1B2-related</td>
-                    </tr>
-                    <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>AGSCTD002</td>
-                    <td>Draft</td>
-                    <td>Disorder</td>
-                    <td>Neuromuscular</td>
-                    <td>01/10/2021</td>
-                    <td>Padmaja K</td>
-                    <td>01/10/2021</td>
-                    <td>01/10/2021</td>
-                    <td>TYRP1</td>
-                    <td>Ataxia, cerebellar, ATP1B2-related</td>
-                    </tr>
-                    <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>AGSCTD002</td>
-                    <td>Draft</td>
-                    <td>Disorder</td>
-                    <td>Neuromuscular</td>
-                    <td>01/10/2021</td>
-                    <td>Padmaja K</td>
-                    <td>01/10/2021</td>
-                    <td>01/10/2021</td>
-                    <td>TYRP1</td>
-                    <td>Ataxia, cerebellar, ATP1B2-related</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </div>
-    );
-}
-
 export default ({
-    changePage
+    changePage,
+    projectId
 }) => {
+    if (projectId === undefined || projectId === null) {
+        return null
+    }
+    const [data, setProjectSummaryInfo] = useState({})
+    const [projectList, setProjectList] = useState([]);
+    useEffect(() => {
+        request('GET', "http://202.153.40.2:9500/MCDS/mcds/API/project-list",setProjectList);
+        request('GET', "http://202.153.40.2:9500/MCDS/mcds/API/project-summary?projectId=" + projectId, setProjectSummaryInfo)
+    }, [])
+
+    useEffect(() => {
+        console.log(projectList)
+    },[projectList])
+
+    if (data[0] !== undefined) {
     return (
         <>
             <Navbar bg="light" variant="light" expand="sm">
@@ -144,14 +98,23 @@ export default ({
             <div className="pull-between">
                 <div>
                     <div className="margins">
-                        Canine:
+                        {data[0].speciesName}
                         <b>
                             <div>
-                                Canine TD v2 
+                                {data[0].projectName}
                             </div>
                         </b>
                     </div>
-                    <ProjectInfo />
+                    <ProjectInfo
+                        projectStatus={data[0].projectStatus}
+                        lastUpdated={data[0].lastUpdatedDate}
+                        createdDate={data[0].createdDate}
+                        updatedBy={data[0].updatedBy}
+                        productPanel={data[0].productPanel}
+                        parentProject={data[0].parentProject}
+                        teamData={data[0].teamData}
+                        statusData={data[0].statusData}
+                    />
                 </div>
                 <div className="pull-down">
                     <button className="fat-button">
@@ -162,8 +125,13 @@ export default ({
                     </button>
                 </div>
             </div>
-            <SelectAndSendData />
-            <DataTable />
+            <SelectAndSendData/>
+            <DataTable
+                categoryWiseDisorderMarkerList={data[0].categoryWiseDisorderMarkerList}
+                categoryWiseTraitMarkerList={data[0].categoryWiseTraitMarkerList}
+            />
         </>
     )
+    }
+    return (<div id="loader"></div>)
 }

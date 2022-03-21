@@ -4,7 +4,7 @@
 
 .tile {
     min-width: 329.078;
-    min-height: 128px;
+    min-height: 150px;
     padding: 10px;
     border-radius: 4px;
     background-color: #F0F0F0;
@@ -133,4 +133,10 @@
 .field-name {
     font-size: 12px;
     width: 100px;
+}
+
+.section-background {
+    min-width: 100px;
+    min-height: 40px;
+    background-color: lightblue;
 }
