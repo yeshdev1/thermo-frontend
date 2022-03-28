@@ -1,5 +1,5 @@
 
-export const request = (type, endpoint, setData) => {
+export const request = (type, endpoint, setData, bodyData) => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer 1234");
     myHeaders.append("Content-Type", "application/json");
@@ -9,7 +9,8 @@ export const request = (type, endpoint, setData) => {
     fetch(endpoint, {
         method: type,
         headers: myHeaders,
-        redirect: 'follow'
+        redirect: 'follow',
+        body: JSON.stringify(bodyData)
     })
     .then(response => response.json())
     .then(result => setData(result.data))
