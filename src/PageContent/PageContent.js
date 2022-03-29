@@ -2,47 +2,32 @@ import { LANDING_PAGE, CANINE_DESCRIPTION_PAGE, PROJECT_VIEW } from "../Strings/
 import LandingPage from './LandingPage';
 import SummaryView from "./SummaryView";
 import ProjectView from "./ProjectView";
-import { useState } from 'react';
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-const PageContent = ({
-    currentPage,
-    setCurrentPage
-}) => {
-    const [projectId,setProjectId] = useState(-1)
-    const changePage = (currentPageName, ...details) => {
-        setProjectId(details[0])
-        setCurrentPage(currentPageName)
-    }
-    switch (currentPage) {
-        case PROJECT_VIEW:
-            return (
-                <>
-                    <ProjectView
-                        changePage={changePage}
-                        projectId={projectId}
-                    />
-                </>
-            )
-        case CANINE_DESCRIPTION_PAGE:
-            return (
-                <>
-                    <SummaryView
-                        changePage={changePage}
-                        projectId={projectId}
-                    />
-                </>
-            )
-        case LANDING_PAGE:
-        default:
-            return (
-                <>
-                    <LandingPage
-                        changePage={changePage}
-                    />
-                </>
-            )
-    }
+const PageContent = () => {
+    return (
+        <Routes>
+            <Route
+                path="/"
+                element={
+                    <LandingPage />
+                }
+            />
+            <Route
+                path="/content/:projectId"
+                element={
+                    <ProjectView />
+                }
+            />
+            <Route
+                path="/summary/:projectId"
+                element={
+                    <SummaryView />
+                }
+            />
+        </Routes>
+    )
 }
 
 export default PageContent

@@ -13,6 +13,22 @@ export const request = (type, endpoint, setData, bodyData) => {
         body: JSON.stringify(bodyData)
     })
     .then(response => response.json())
-    .then(result => setData(result.data))
-    .catch(error => console.log('error', error));
+    .then(result => {
+        if (type === "POST") {
+            if (typeof result === 'string') {
+                var res = JSON.parse(result);
+                setData(res.message.toLowerCase())
+                return
+            }
+            setData(result.data)
+            return
+        }
+        setData(result.data)
+    })
+    .catch(error => {
+        if (type === "POST") {
+            setData("error")
+        }
+        console.log('error', error)
+    });
 }

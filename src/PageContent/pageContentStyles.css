@@ -58,12 +58,15 @@
     text-color: grey;
     font-size: 10px;
     font-weight: normal;
+    word-wrap: break-word;
+    width: 10rem;
 }
 
 .child-project-info {
     text-color: black;
     font-size: 14px;
     font-weight: bold;
+    word-wrap: break-word;
 }
 
 
@@ -134,18 +137,19 @@
 
 .field-name {
     font-size: 12px;
-    width: 100px;
+    min-width: 20%;
+    word-wrap: break-word;
 }
 
 .section-background {
     min-width: 100px;
     min-height: 40px;
-    background-color: lightblue;
 }
 
 .field-update-tile {
     max-height: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .commentTextArea {
@@ -171,6 +175,7 @@
 }
 
 .textAreaFields {
+    width: 25rem;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -204,7 +209,7 @@
 }
 
 .link {
-   color:blue;
+   color:#0d6efd;
    text-decoration: underline;
    background-color: none;
    font-size: 14px;

@@ -4,27 +4,32 @@ import React, { useState, useEffect } from 'react';
 
 const Rows = ({
     data,
-    checkedList
+    checkedList,
+    changedCheckedList
 }) => {
-    const [bodyCheckList, changeBodyCheckList] = useState([...checkedList])
+    // const [bodyCheckList, changeBodyCheckList] = useState([...checkedList])
 
-    useEffect(() => {
-        changeBodyCheckList(checkedList)
-    }, [checkedList])
+    // useEffect(() => {
+    //     changeBodyCheckList(checkedList)
+    // }, [checkedList])
 
-    const handleChange = (bodyCheckList,markerId) => {
-        const bodyCheckListClone = [...bodyCheckList];
+    // useEffect(() => {
+    //     changedCheckedList(bodyCheckList)
+    // }, [bodyCheckList])
+
+    const handleChange = (checkedList,markerId) => {
+        const bodyCheckListClone = [...checkedList];
         if (bodyCheckListClone.indexOf(markerId) !== -1) {
-            changeBodyCheckList([...bodyCheckListClone.filter(item => item !== markerId)]);
+            changedCheckedList([...bodyCheckListClone.filter(item => item !== markerId)]);
         } else {
             bodyCheckListClone.push(markerId)
-            changeBodyCheckList([...bodyCheckListClone])
+            changedCheckedList([...bodyCheckListClone])
         }
     };
 
-    const checkChecked = (bodyCheckList,markerId) => {
-        if (bodyCheckList.length === 0) return false;
-        const status = bodyCheckList.indexOf(markerId) !== -1
+    const checkChecked = (checkedList,markerId) => {
+        if (checkedList.length === 0) return false;
+        const status = checkedList.indexOf(markerId) !== -1
         return status
     }
 
@@ -33,8 +38,8 @@ const Rows = ({
             <td>
                 <input
                     type="checkbox"
-                    checked={checkChecked(bodyCheckList,item.markerId)}
-                    onChange={() => handleChange(bodyCheckList,item.markerId)}>
+                    checked={checkChecked(checkedList,item.markerId)}
+                    onChange={() => handleChange(checkedList,item.markerId)}>
                 </input>
             </td>
             <td>{item.markerName}</td>
@@ -53,16 +58,19 @@ const Rows = ({
 
 export const DataTable = ({
     categoryWiseDisorderMarkerList,
-    categoryWiseTraitMarkerList
+    categoryWiseTraitMarkerList,
+    checkedList,
+    changedCheckedList
 }) => {
-    const [checkedList,changedCheckedList] = useState([]); // adding the markerIds here
     const massagedData = mergeIntoArrays(categoryWiseDisorderMarkerList,categoryWiseTraitMarkerList)
     const length = massagedData.length
     const handleCheckAll = (checkedList) => {
         const checkedListClone = [...checkedList]
         if (checkedListClone.length === 0) {
             massagedData.forEach(node => {
-                checkedListClone.push(node.markerId)
+                if (checkedListClone.indexOf(node.markerId) === -1) {
+                    checkedListClone.push(node.markerId)
+                }
             })
             changedCheckedList(checkedListClone)
         } else {

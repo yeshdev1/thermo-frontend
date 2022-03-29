@@ -9,6 +9,8 @@ import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import { request } from "../Api/api";
 import '../App.css';
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "react-bootstrap"
 
 const RenderField = ({
     fieldName,
@@ -37,8 +39,6 @@ const RenderField = ({
             <span>
                 <textarea
                     className="textAreaFields"
-                    rows="3"
-                    cols="70"
                     onChange={handleChange}
                 ></textarea>
             </span>
@@ -72,7 +72,7 @@ const FieldsSection = ({
         request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerData", () => {}, dataWithDetails)
     }
     return (
-        <div className="field-update-tile">
+        <div>
             <div className="pull-between margins">
                 <span>This space is for displaying messages</span>
                 <span>
@@ -84,18 +84,20 @@ const FieldsSection = ({
                     </button>
                 </span>
             </div>
-            {fields.map(node => {
-                return (
-                    <RenderField
-                        fieldName={node.fieldName}
-                        fieldLastUpdatedDate={node.fieldLastUpdatedDate}
-                        fieldUpdatedBy={node.fieldUpdatedBy}
-                        fieldId={node.fieldId}
-                        setFieldsData={setFieldsData}
-                        data={data}
-                    />
-                )
-            })}
+            <div className="field-update-tile">
+                {fields.map(node => {
+                    return (
+                        <RenderField
+                            fieldName={node.fieldName}
+                            fieldLastUpdatedDate={node.fieldLastUpdatedDate}
+                            fieldUpdatedBy={node.fieldUpdatedBy}
+                            fieldId={node.fieldId}
+                            setFieldsData={setFieldsData}
+                            data={data}
+                        />
+                    )
+                })}
+            </div>
         </div>
     )
 }
@@ -119,21 +121,23 @@ const CommentsSection = ({
             >
                 Add
             </button>
-            {commentList.map(comment => (
-                <div className="pull-apart">
-                    <div className="comment">
-                        {comment.commentText}
-                    </div>
-                    <div>
-                        <div className="date-time">
-                            {comment.commentDateTime.split(" ")[0]}
+            <div className="field-update-tile">
+                {commentList.map(comment => (
+                    <div className="pull-apart">
+                        <div className="comment">
+                            {comment.commentText}
                         </div>
-                        <div className="date-time">
-                            {comment.commentDateTime.split(" ")[1]}
+                        <div>
+                            <div className="date-time">
+                                {comment.commentDateTime.split(" ")[0]}
+                            </div>
+                            <div className="date-time">
+                                {comment.commentDateTime.split(" ")[1]}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     )
 }
@@ -268,8 +272,24 @@ const ToggleFunctions = ({
             "projectId": projectId,
             "markerId":markerId
         }
-        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerComments", setComments, comment)
+        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerComments", () => {}, comment)
+        const currentdate = new Date(); 
+        const datetime = currentdate.getFullYear() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getDate() + " "
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+        const newCommet = {
+            "commentText": currentComment,
+            "commentDateTime": datetime,
+            "commentBy": ""
+        }
+        const newComments = Object.assign([], comments)
+        newComments.push(newCommet)
+        setComments(newComments)
     }
+
     const addWebLinkToMarker = (currentWebLink) => {
         console.log('logging weblinks post request sent')
         const weblink = {
@@ -279,11 +299,27 @@ const ToggleFunctions = ({
             "markerId":markerId,
             "projectId":projectId
         }
-        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerWebLink", setWebLinks, weblink)
+        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerWebLink", () => {}, weblink)
+        // const currentdate = new Date(); 
+        // const datetime = currentdate.getFullYear() + "/"
+        //         + (currentdate.getMonth()+1)  + "/"
+        //         + currentdate.getDate() + " "
+        //         + currentdate.getHours() + ":"  
+        //         + currentdate.getMinutes() + ":" 
+        //         + currentdate.getSeconds();
+        // const newCommet = {
+        //     "commentText": currentComment,
+        //     "commentDateTime": datetime,
+        //     "commentBy": ""
+        // }
+        // const newComments = Object.assign([], comments)
+        // newComments.push(newCommet)
+        // setWebLinks(newComments)
     }
+
     const addArticleToMarker = () => {
         console.log('logging articles post request sent')
-        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerArticles", setArticles, {})
+        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerArticles", () => {}, {})
     }
 
     return (
@@ -303,19 +339,19 @@ const ToggleFunctions = ({
             </div>
             {value === 0 &&
                 <CommentsSection
-                    commentList={commentList}
+                    commentList={comments}
                     addCommentToMarker={addCommentToMarker}
                 />
             }
             {value === 1 &&
                 <WebLinks
-                    webLinksList={webLinksList}
+                    webLinksList={webLinks}
                     addWebLinkToMarker={addWebLinkToMarker}
                 />
             }
             {value === 2 &&
                 <Articles
-                    articalList={articalList}
+                    articalList={articles}
                     addArticleToMarker={addArticleToMarker}
                 />
             }   
@@ -470,12 +506,25 @@ const Info = ({
     )
 }
 
-export default ({
-    changePage,
-    projectId
-}) => {
-    if (projectId === null || projectId === undefined) return null;
-    const [view,setView] = useState(COMMENTS);
+export default () => {
+    let { projectId } = useParams();
+    const navigate = useNavigate();
+    const changePage = () => {
+        navigate('/')
+    }
+    if (projectId === null || projectId === undefined) {
+        return (
+            <div className="loading">
+                No project with the Id exists
+                Click here to head back to dashboard:
+                <div>
+                    <Button onClick={() => changePage()}>
+                        Dashboard
+                    </Button>
+                </div>
+            </div>
+        )
+    }
     const [active,setActive] = useState(0)
     const [data, setChangedData] = useState([])
     const [markerList,setMarkerList] = useState([]);
@@ -523,7 +572,7 @@ export default ({
                         teamData={data[0].teamData}
                         statusData={data[0].statusData}
                     />
-                    <button className="default-button" onClick={() => changePage(LANDING_PAGE)}>
+                    <button className="default-button" onClick={() => changePage(projectId)}>
                         Close View
                     </button>
                 </div>

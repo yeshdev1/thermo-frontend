@@ -3,17 +3,16 @@ import { CANINE_DESCRIPTION_PAGE, PROJECT_VIEW } from '../Strings/strings';
 import './pageContentStyles.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default (props) => {
-    const {
-        changePage
-    } = props;
+export default () => {
+    const navigate = useNavigate();
     const [data, setData] = useState([])
     const onClickSummary = (projectId) => {
-        changePage(CANINE_DESCRIPTION_PAGE,projectId)
+        navigate('/summary/' + projectId);
     }
     const onClickContent = (projectId) => {
-        changePage(PROJECT_VIEW,projectId)
+        navigate('/content/' + projectId);
     }
     useEffect(() => {
         var myHeaders = new Headers();
