@@ -38,3 +38,14 @@ export const mergeIntoArrays = (arr1, arr2) => {
     });
     return concatenatedArray;
 }
+
+export const fileToBase64 = (file, cb) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = function () {
+      cb(null, reader.result)
+    }
+    reader.onerror = function (error) {
+      cb(error, null)
+    }
+}

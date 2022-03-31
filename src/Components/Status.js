@@ -64,7 +64,7 @@ const Status = (props) => {
                 </span>
             </div>
             <div className="bottomSize">
-                Old version - <span style={{color:"blue"}}>{data.old_version || "None"}</span>
+                Old version - <span style={{color:"#0d6efd"}}>{data.old_version || "None"}</span>
             </div>
         </div>
     )

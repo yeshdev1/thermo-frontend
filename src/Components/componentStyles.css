@@ -55,7 +55,7 @@
 
 .breed {
     font-size: 20px;
-    color: rgb(71, 71, 247);
+    color: #0d6efd;
     margin-left: 10px;
 }
 
@@ -74,6 +74,7 @@
 .superscriptSize{
     font-size: 30px;
     color: red;
+    font-weight: 800;
 }
 
 .subscriptSize {

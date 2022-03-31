@@ -24,13 +24,13 @@ export const SuccessMiniModal = ({
         >
             <Modal.Dialog>
                 <Modal.Header closeButton></Modal.Header>
-                {status === "success" && status &&
+                {status === "success" &&
                     <Alert variant="success">
                         <Alert.Heading>Success!</Alert.Heading>
                         {children}
                     </Alert>
                 }
-                {status !== "success" && status &&
+                {status !== "success"  &&
                     <Alert variant="danger">
                         <Alert.Heading>Error!</Alert.Heading>
                         Please contact adminstrator if not resolved in a few minutes or when you try again

@@ -1,12 +1,36 @@
 import { Navbar, Container, Nav, NavDropdown,Table, Button } from "react-bootstrap"
 import ProjectInfo from '../Components/ProjectInfo';
 import React, { useState, useEffect } from 'react';
-import { PROJECT_VIEW } from "../Strings/strings";
 import { request } from "../Api/api";
 import { DataTable } from '../Components/DataTable';
 import { SuccessMiniModal } from '../Components/Messages';
 import '../App.css';
 import { useNavigate, useParams } from "react-router-dom";
+
+//Finding the project id here
+const findDetails = (projectList, projectId) => {
+    let details = {};
+    projectList.forEach(item => {
+        if ("product" in item) {
+            item["product"].forEach(productItem => {
+                if ("project" in productItem) {
+                    productItem["project"].map(project => {
+                        if (project.projectId.toString() === projectId.toString()) {
+                            details["speciesId"] = item.speciesId;
+                            details["speciesName"] = item.speciesName;
+                            details["productId"] = productItem.productId;
+                            details["productName"] = productItem.productName;
+                            details["projectId"] = project.projectId;
+                            details["projectName"] = project.projectName;
+                            return details;
+                        }
+                    })
+                }
+            })
+        }
+    });
+    return details;
+}
 
 const MakeSendButtons = ({
     projectId,
@@ -147,6 +171,7 @@ export default () => {
     const [checkedList,changedCheckedList] = useState([]); // adding the markerIds here
     const [data, setProjectSummaryInfo] = useState({})
     const [projectList, setProjectList] = useState([]);
+    const [currentDropDown, setCurrentDropDown] = useState({});
     const [publishStatus, setPublishStatus] = useState(false)
     const onClickPublishProject = (projectId) => {
         request("POST", "http://202.153.40.2:9500/MCDS/mcds/API/ProjectPublish?projectId="+projectId,setPublishStatus,{})
@@ -155,6 +180,11 @@ export default () => {
         request('GET', "http://202.153.40.2:9500/MCDS/mcds/API/project-list",setProjectList);
         request('GET', "http://202.153.40.2:9500/MCDS/mcds/API/project-summary?projectId=" + projectId, setProjectSummaryInfo)
     }, [])
+
+    useEffect(() => {
+        const projectDetails = findDetails(projectList, projectId);
+        setCurrentDropDown(projectDetails)
+    }, [projectList])
 
     if (data[0] !== undefined) {
         return (
@@ -174,8 +204,33 @@ export default () => {
                         <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                         </Nav>
+                        <Navbar.Brand ><b>Select project to view summary:</b></Navbar.Brand >
                         <Nav>
-                            <Navbar.Text><b>Select project to view summary:</b></Navbar.Text>
+                            <div className="dropdown margins" style={{float: "right"}}>
+                                <button className="dropbtn" value={currentDropDown.speciesId}>{currentDropDown.speciesName}</button>
+                                <div className="dropdown-content">
+                                    {projectList.map(node => (
+                                        <a href="#" key={node.speciesId}>{node.speciesName}</a>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="dropdown margins" style={{float: "right"}}>
+                                <button className="dropbtn">Product</button>
+                                <div className="dropdown-content">
+                                    <a href="#">Link 1</a>
+                                    <a href="#">Link 2</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                            </div>
+                            <div className="dropdown margins" style={{float: "right"}}>
+                                <button className="dropbtn">Project</button>
+                                <div className="dropdown-content">
+                                    <a href="#">Link 1</a>
+                                    <a href="#">Link 2</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                            </div>
+                            {/* <Navbar.Text><b>Select project to view summary:</b></Navbar.Text>
                             <Navbar.Text><b> Species: </b></Navbar.Text>
                             <NavDropdown title="Canine" id="collasible-nav-dropdown" variant="secondary">
                             <NavDropdown.Item href="#action/3.1">Canine</NavDropdown.Item>
@@ -187,7 +242,7 @@ export default () => {
                             <Navbar.Text><b>Project: </b></Navbar.Text>
                             <NavDropdown title="Canine TD v2 c2" id="collasible-nav-dropdown" variant="secondary">
                             <NavDropdown.Item href="#action/3.1">Canine TD v2 c2</NavDropdown.Item>
-                            </NavDropdown>
+                            </NavDropdown> */}
                         </Nav>
                         </Navbar.Collapse>
                     </Container>

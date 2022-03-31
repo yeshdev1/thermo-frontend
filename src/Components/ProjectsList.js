@@ -1,4 +1,4 @@
-import { Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import React from 'react';
 
 const ProjectsList = (props) => {

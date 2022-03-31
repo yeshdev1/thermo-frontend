@@ -1,4 +1,3 @@
-import { propTypes } from 'react-bootstrap/esm/Image';
 import './componentStyles.css'
 import ProjectsList from './ProjectsList';
 import React from 'react';

@@ -1,5 +1,4 @@
 import CanineInfoTile from '../Components/CanineInfoTile';
-import { CANINE_DESCRIPTION_PAGE, PROJECT_VIEW } from '../Strings/strings';
 import './pageContentStyles.css';
 import React from 'react';
 import { useState, useEffect } from 'react';

@@ -1,4 +1,3 @@
-import { LANDING_PAGE, CANINE_DESCRIPTION_PAGE, PROJECT_VIEW } from "../Strings/strings"
 import LandingPage from './LandingPage';
 import SummaryView from "./SummaryView";
 import ProjectView from "./ProjectView";

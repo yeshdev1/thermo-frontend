@@ -1,7 +1,5 @@
-import { Children } from "react";
 import '../PageContent/pageContentStyles.css';
 import React from 'react';
-import Progress from '../Images/progress.png';
 
 export const InfoTile = ({children}) => {
     return (

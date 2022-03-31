@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap"
 import { mergeIntoArrays } from '../utils/common';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const Rows = ({
     data,

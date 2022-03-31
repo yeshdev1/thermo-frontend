@@ -1,7 +1,6 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import React from 'react';
 import logo from '../Images/logo.jpeg';
-import { LANDING_PAGE } from '../Strings/strings';
 import { useNavigate } from 'react-router-dom';
 
 function NavBarComponent() {

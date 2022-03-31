@@ -11,6 +11,9 @@ import { request } from "../Api/api";
 import '../App.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap"
+import { SuccessMiniModal } from '../Components/Messages';
+import FileReader from '../Components/FileReader';
+
 
 const RenderField = ({
     fieldName,
@@ -59,26 +62,39 @@ const RenderField = ({
 const FieldsSection = ({
     fieldList,
     markerId,
-    projectId
+    projectId,
+    navigate
 }) => {
     const [data,setFieldsData] = useState([]);
     const [fields,setFields] = useState(fieldList)
+    const [saveFieldsStatus,setSaveFields] = useState(false);
+
+    useEffect(() => {
+        setFields(fields);
+    }, [fieldList])
+
     const handleSaveFields = (data) => {
         const dataWithDetails = {
             "markerId":markerId,
             "projectId":projectId,
             "data":data
         }
-        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerData", () => {}, dataWithDetails)
+        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerData", setSaveFields, dataWithDetails)
     }
     return (
         <div>
+            <SuccessMiniModal status={saveFieldsStatus} setStatus={setSaveFields}>
+                Success! All fields you changed have been saved!
+            </SuccessMiniModal>
             <div className="pull-between margins">
                 <span>This space is for displaying messages</span>
                 <span>
                     <button
                         className="default-button"
-                        onClick={() => handleSaveFields(data)}
+                        onClick={() => {
+                            handleSaveFields(data)
+                            navigate('/content/'+projectId)
+                        }}
                     >
                         Save Fields
                     </button>
@@ -102,7 +118,6 @@ const FieldsSection = ({
     )
 }
 
-
 const CommentsSection = ({
     commentList,
     addCommentToMarker
@@ -114,14 +129,14 @@ const CommentsSection = ({
 
     return (
         <div className="text-area-center">
-            <textarea className="commentTextArea" value={currentComment} onChange={handleChange}></textarea>
+            <textarea className="commentTextArea space-up-down" value={currentComment} onChange={handleChange}></textarea>
             <button
-                className="default-button"
+                className="default-button space-up-down"
                 onClick={() => addCommentToMarker(currentComment)}
             >
                 Add
             </button>
-            <div className="field-update-tile">
+            <div className="field-update-tile-tabs">
                 {commentList.map(comment => (
                     <div className="pull-apart">
                         <div className="comment">
@@ -158,17 +173,20 @@ const WebLinks = ({
     const handleChangeCurrentDescription = (event) => {
         setCurrentDescription(event.target.value)
     }
+    const handleOpenWindow = (url) => {
+        window.open(url);
+    }
     return (
         <div className="text-area-center">
-            <div className="pull-between">
+            <div className="pull-between space-up-down">
                 <span className="field-name">Title</span>
                 <span><input type="text" value={currentTitle} onChange={handleChangeCurrentTitle}/></span>
             </div>
-            <div className="pull-between">
+            <div className="pull-between space-up-down">
                 <span className="field-name">URL</span>
                 <span><input type="text" value={currentLink} onChange={handleChangeCurrentLink}/></span>
             </div>
-            <div className="pull-between">
+            <div className="pull-between space-up-down">
                 <span className="field-name">Description</span>
                 <span><textarea value={currentDescription} onChange={handleChangeCurrentDescription}></textarea></span>
             </div>
@@ -182,74 +200,101 @@ const WebLinks = ({
             >
                 Add
             </button>
-            {webLinksList.map(node => (
-                <div className="weblink">
-                    <a href={node.url} className="link">{node.title}</a>
-                    <div className="pull-between">
-                        <div className="webLinkText">
-                            {node.description}
-                        </div>
-                        <div>
-                            <div className="date-time">
-                                {node.createdDateTime.split(" ")[0]}
+            <div className="field-update-tile-tabs">
+                {webLinksList.map(node => (
+                    <div className="weblink">
+                        <a className="link" onClick={() => handleOpenWindow(node.url)}>{node.title}</a>
+                        <div className="pull-between">
+                            <div className="webLinkText">
+                                {node.description}
                             </div>
-                            <div className="date-time">
-                                {node.createdDateTime.split(" ")[1]}
+                            <div>
+                                <div className="date-time">
+                                    {node.createdDateTime.split(" ")[0]}
+                                </div>
+                                <div className="date-time">
+                                    {node.createdDateTime.split(" ")[1]}
+                                </div>
                             </div>
                         </div>
+                        <hr />
                     </div>
-                    <hr />
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     )
 }
 
 const Articles = ({
     articalList,
-    addArticleToMarker
-}) => (
-    <div className="text-area-center">
-        <div className="pull-apart">
-            <span className="field-name">Title</span>
-            <span><input type="text"/></span>
-        </div>
-        <div className="pull-apart">
-            <span className="field-name">Article File</span>
-            <span><input type="text"/></span>
-            <span><button>Upload File</button></span>
-        </div>
-        <div className="pull-apart">
-            <span className="field-name">Description</span>
-            <span><textarea></textarea></span>
-        </div>
-        <button
-            className="default-button"
-            onClick={addArticleToMarker}
-        >
-            Add
-        </button>
-        {articalList.map(node => (
-            <div className="weblink">
-                <a href={node.url} className="link">{node.title}</a>
-                <div className="pull-between">
-                        <div className="webLinkText">
-                            {node.description}
-                        </div>
-                        <div>
-                            <div className="date-time">
-                                {node.createdDateTime.split(" ")[0]}
+    addArticleToMarker,
+    markerId,
+    projectId
+}) => {
+    const [uploadedArticle, setUploadedArticle] = useState(null);
+    const [title,setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    useEffect(() => {
+        if (uploadedArticle === null || title === "" || description === "") {
+            return
+        }
+        addArticleToMarker({
+            "title": title,
+            "fileData": uploadedArticle,
+            "journal": "",
+            "authors": "",
+            "description": description,
+            "markerId": markerId,
+            "projectId": parseInt(projectId)
+        })
+    }, [uploadedArticle,title,description])
+
+    const convertBase64toPdfAndOpen = (b64Data) => {
+        var BASE64_MARKER = ';base64,';
+        var base64Index = b64Data.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+        var base64 = b64Data.substring(base64Index);
+        const byteCharacters = window.atob(base64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], {type: 'application/pdf'});
+        const blobUrl = URL.createObjectURL(blob);
+
+        window.open = blobUrl;
+    }
+    return (
+        <div className="text-area-center">
+            <FileReader
+                setUploadedArticle={setUploadedArticle}
+                setTitle={setTitle}
+                setDescription={setDescription}
+            />
+            <div className="field-update-tile-tabs">
+                {articalList.map(node => (
+                    <div className="weblink">
+                        <div className="link" onClick={() => convertBase64toPdfAndOpen(node.fileData)}>{node.title}</div>
+                        <div className="pull-between">
+                                <div className="webLinkText">
+                                    {node.description}
+                                </div>
+                                <div>
+                                    <div className="date-time">
+                                        {node.createdDateTime.split(" ")[0]}
+                                    </div>
+                                    <div className="date-time">
+                                        {node.createdDateTime.split(" ")[1]}
+                                    </div>
+                                </div>
                             </div>
-                            <div className="date-time">
-                                {node.createdDateTime.split(" ")[1]}
-                            </div>
-                        </div>
+                        <hr />
                     </div>
-                <hr />
+                ))}
             </div>
-        ))}
-    </div>
-)
+        </div>
+    )
+}
 
 const ToggleFunctions = ({
     commentList,
@@ -262,6 +307,13 @@ const ToggleFunctions = ({
     const [comments,setComments] = useState(commentList)
     const [webLinks,setWebLinks] = useState(webLinksList)
     const [articles,setArticles] = useState(articalList)
+
+    useEffect(() => {
+        setComments(commentList)
+        setWebLinks(webLinksList)
+        setArticles(articalList)
+    },[commentList,webLinksList,articalList])
+
     const handleChange = (index) => {
         setValue(index)
     }
@@ -274,8 +326,8 @@ const ToggleFunctions = ({
         }
         request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerComments", () => {}, comment)
         const currentdate = new Date(); 
-        const datetime = currentdate.getFullYear() + "/"
-                + (currentdate.getMonth()+1)  + "/"
+        const datetime = currentdate.getFullYear() + "-"
+                + (currentdate.getMonth()+1)  + "-"
                 + currentdate.getDate() + " "
                 + currentdate.getHours() + ":"  
                 + currentdate.getMinutes() + ":" 
@@ -300,26 +352,40 @@ const ToggleFunctions = ({
             "projectId":projectId
         }
         request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerWebLink", () => {}, weblink)
-        // const currentdate = new Date(); 
-        // const datetime = currentdate.getFullYear() + "/"
-        //         + (currentdate.getMonth()+1)  + "/"
-        //         + currentdate.getDate() + " "
-        //         + currentdate.getHours() + ":"  
-        //         + currentdate.getMinutes() + ":" 
-        //         + currentdate.getSeconds();
-        // const newCommet = {
-        //     "commentText": currentComment,
-        //     "commentDateTime": datetime,
-        //     "commentBy": ""
-        // }
-        // const newComments = Object.assign([], comments)
-        // newComments.push(newCommet)
-        // setWebLinks(newComments)
+        const currentdate = new Date();
+        const datetime = currentdate.getFullYear() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getDate() + " "
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+        const newWebLink = {
+            "title":currentWebLink.title,
+            "url":currentWebLink.webLinkUrl,
+            "description":currentWebLink.description,
+            "createdDateTime": datetime,
+            "createdBy": ""
+        }
+        const newWebLinks = Object.assign([], webLinks)
+        newWebLinks.push(newWebLink)
+        setWebLinks(newWebLinks)
     }
 
-    const addArticleToMarker = () => {
+    const addArticleToMarker = (data) => {
         console.log('logging articles post request sent')
-        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerArticles", () => {}, {})
+        request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerArticles", () => {}, data)
+        const currentdate = new Date();
+        const datetime = currentdate.getFullYear() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getDate() + " "
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+        data.createdDateTime = datetime
+        data.createdBy = ""
+        const newArticles = Object.assign([], articles)
+        newArticles.push(data)
+        setArticles(newArticles)
     }
 
     return (
@@ -353,6 +419,8 @@ const ToggleFunctions = ({
                 <Articles
                     articalList={articles}
                     addArticleToMarker={addArticleToMarker}
+                    projectId={projectId}
+                    markerId={markerId}
                 />
             }   
         </div>
@@ -417,6 +485,7 @@ const ColoredLine = (props) => {
 }
 
 const Info = ({
+    markerId,
     markerName,
     markerType,
     markerCategory,
@@ -427,10 +496,27 @@ const Info = ({
     lastUpdatedBy,
     lastUpdatedDate,
     reviewedBy,
-    reviewedDate
+    reviewedDate,
+    projectId
 }) => {
+    const [status, setStatus] = useState(false)
+    const sentToReview = (markerId, projectId) => {
+        const data = {
+            "data": [
+                {"markerId":markerId, "projectId":parseInt(projectId)}
+            ]
+        }
+        request("POST","http://202.153.40.2:9500/MCDS/mcds/API/SendToReview",setStatus,data)
+    }
+
     return (
-        <div className="pull-apart horizontal-tile">
+        <div className="pull-between horizontal-tile">
+            <SuccessMiniModal
+                setStatus={setStatus}
+                status={status}
+            >
+                The selected <b>project: {projectId} and marker: {markerName} </b> have been sent to Review!
+            </SuccessMiniModal>
             <div className="pull-apart">
                 <span>
                     <InfoTile>
@@ -499,7 +585,7 @@ const Info = ({
                     </InfoTile>
                 </span>
             </div>
-            <button className="default-button">
+            <button className="default-button" onClick={() => sentToReview(markerId, projectId)}>
                 Send to Review
             </button>       
         </div>
@@ -512,23 +598,24 @@ export default () => {
     const changePage = () => {
         navigate('/')
     }
+    const [active,setActive] = useState(0)
+    const [data, setChangedData] = useState([])
+    const [markerList,setMarkerList] = useState([]);
+    const [currentMarker,setCurrentMarker] = useState({})
+
     if (projectId === null || projectId === undefined) {
         return (
             <div className="loading">
                 No project with the Id exists
                 Click here to head back to dashboard:
                 <div>
-                    <Button onClick={() => changePage()}>
+                    <Button onClick={changePage}>
                         Dashboard
                     </Button>
                 </div>
             </div>
         )
     }
-    const [active,setActive] = useState(0)
-    const [data, setChangedData] = useState([])
-    const [markerList,setMarkerList] = useState([]);
-    const [currentMarker,setCurrentMarker] = useState({})
 
 
     useEffect(() => {
@@ -596,6 +683,7 @@ export default () => {
                         </ListGroup>
                     </div>
                     <Info
+                        markerId={currentMarker.markerId}
                         markerName={currentMarker.markerName || "None"}
                         markerType={"Disorder" || "None"}
                         markerCategory={"None" || "None"}
@@ -607,6 +695,7 @@ export default () => {
                         lastUpdatedDate={currentMarker.statusData.lastUpdatedDate || "None"}
                         reviewedBy={currentMarker.statusData.reviewedBy || "None"}
                         reviewedDate={currentMarker.statusData.reviewedDate|| "None"}
+                        projectId={projectId}
                     />
                     <SpecificContent
                         fieldList={currentMarker.fieldList}
