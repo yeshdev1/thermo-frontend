@@ -22,10 +22,13 @@ const RenderField = ({
     fieldLastUpdatedDate,
     fieldUpdatedBy,
     fieldId,
+    fieldValue,
     setFieldsData,
     data
 }) => {
+    const [value,setValue] = useState(fieldValue)
     const handleChange = (event) => {
+        setValue(event.target.value)
         const obj = {
             "fieldId": fieldId,
             "value": event.target.value
@@ -45,6 +48,7 @@ const RenderField = ({
                 <textarea
                     className="textAreaFields"
                     onChange={handleChange}
+                    value={value}
                 ></textarea>
             </span>
             <span>
@@ -110,6 +114,7 @@ const FieldsSection = ({
                             fieldLastUpdatedDate={node.fieldLastUpdatedDate}
                             fieldUpdatedBy={node.fieldUpdatedBy}
                             fieldId={node.fieldId}
+                            fieldValue={node.value}
                             setFieldsData={setFieldsData}
                             data={data}
                         />
