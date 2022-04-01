@@ -14,9 +14,12 @@ function CanineInfoTile (props) {
         return products.map(product => {
             const activeProductData = product?.activeProduct || {}
             const mostRecentProjectsData = product?.mostRecentProjects || []
+            const imageData = product?.imageData || "";
             return (
                 <>
-                    <ImageTile />
+                    <ImageTile
+                        imageData={imageData}
+                    />
                     <Status data={activeProductData} productId={product?.productId || null} />
                     <Recents onClickSummary={props.onClickSummary} onClickContent={props.onClickContent} productId={product?.productId || null} data={mostRecentProjectsData} />
                     <PersonnelAssigned data={product.userDetails} productId={product?.productId || null} />

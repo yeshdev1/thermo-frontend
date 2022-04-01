@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap"
 import { SuccessMiniModal } from '../Components/Messages';
 import FileReader from '../Components/FileReader';
+import { convertBase64toPdfAndOpen } from '../utils/common';
 
 
 const RenderField = ({
@@ -241,7 +242,7 @@ const Articles = ({
         }
         addArticleToMarker({
             "title": title,
-            "fileData": uploadedArticle,
+            "fileData": uploadedArticle.split(',')[1],
             "journal": "",
             "authors": "",
             "description": description,
@@ -250,25 +251,10 @@ const Articles = ({
         })
     }, [uploadedArticle,title,description])
 
-    const convertBase64toPdfAndOpen = (b64Data) => {
-        console.log(b64Data)
-        // if (b64Data === null) {
-        //     return
-        // }
-        var BASE64_MARKER = ';base64,';
-        var base64Index = b64Data.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-        var base64 = b64Data.substring(base64Index);
-        const byteCharacters = window.atob(base64);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], {type: 'application/pdf'});
-        const blobUrl = URL.createObjectURL(blob);
-
-        window.location = blobUrl;
+    const convertAndOpenPDF = (data,type) => {
+        window.location = convertBase64toPdfAndOpen(data,type);
     }
+
     return (
         <div className="text-area-center">
             <FileReader
@@ -279,7 +265,7 @@ const Articles = ({
             <div className="field-update-tile-tabs">
                 {articalList.map(node => (
                     <div className="weblink">
-                        <div className="link" onClick={() => convertBase64toPdfAndOpen(node.fileData)}>{node.title}</div>
+                        <div className="link" onClick={() => convertAndOpenPDF(node.fileData, 'application/pdf')}>{node.title}</div>
                         <div className="pull-between">
                                 <div className="webLinkText">
                                     {node.description}

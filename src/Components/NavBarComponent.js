@@ -24,7 +24,7 @@ function NavBarComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                     </Nav>
-                    <Nav>
+                    {/* <Nav>
                         <NavDropdown title="Bell Icon" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -38,7 +38,7 @@ function NavBarComponent() {
                                 Srinivas
                             </b>
                         </Navbar.Text>
-                    </Nav>
+                    </Nav> */}
                 </Navbar.Collapse>
             </Container>
         </Navbar>
