@@ -24,21 +24,21 @@ function NavBarComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                     </Nav>
-                    {/* <Nav>
-                        <NavDropdown title="Bell Icon" id="basic-nav-dropdown">
+                    <Nav>
+                        {/* <NavDropdown title="Bell Icon" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown>
-                        <Nav.Link href="#home">Img</Nav.Link>
+                        </NavDropdown> */}
+                        {/* <Nav.Link href="#home">Img</Nav.Link> */}
                         <Navbar.Text>
                             <b>
                                 Srinivas
                             </b>
                         </Navbar.Text>
-                    </Nav> */}
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
