@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { InfoTile } from '../Components/ProjectInfo';
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import Box from "@material-ui/core/Box";
 import { request } from "../Api/api";
 import '../App.css';
 import { useNavigate, useParams } from "react-router-dom";
@@ -250,6 +251,10 @@ const Articles = ({
     }, [uploadedArticle,title,description])
 
     const convertBase64toPdfAndOpen = (b64Data) => {
+        console.log(b64Data)
+        // if (b64Data === null) {
+        //     return
+        // }
         var BASE64_MARKER = ';base64,';
         var base64Index = b64Data.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
         var base64 = b64Data.substring(base64Index);
@@ -262,7 +267,7 @@ const Articles = ({
         const blob = new Blob([byteArray], {type: 'application/pdf'});
         const blobUrl = URL.createObjectURL(blob);
 
-        window.open = blobUrl;
+        window.location = blobUrl;
     }
     return (
         <div className="text-area-center">
@@ -391,17 +396,23 @@ const ToggleFunctions = ({
     return (
         <div>
             <div>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="wrapped label tabs example"
-                    variant="scrollable"
-                    scrollButtons="auto"
-                >
-                <Tab value={0} label="Comments" onClick={() => handleChange(0)} />
-                <Tab value={1} label="Weblinks" onClick={() => handleChange(1)} />
-                <Tab value={2} label="Articles" onClick={() => handleChange(2)} />
-                </Tabs>
+                <Box sx={{ width: '100%' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            aria-label="wrapped label tabs example"
+                            variant="scrollable"
+                            scrollButtons="auto"
+                            textColor="primary"
+                            indicatorColor="primary"
+                        >
+                        <Tab value={0} label="Comments" onClick={() => handleChange(0)} />
+                        <Tab value={1} label="Weblinks" onClick={() => handleChange(1)} />
+                        <Tab value={2} label="Articles" onClick={() => handleChange(2)} />
+                        </Tabs>
+                    </Box>
+                </Box>
             </div>
             {value === 0 &&
                 <CommentsSection
