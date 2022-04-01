@@ -125,12 +125,12 @@ const SelectAndSendData = ({
                 checkedList={checkedList}
                 changedCheckedList={changedCheckedList}
             />
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
             </Nav>
             <div className="margins">
-                <Nav>
+                {/* <Nav>
                     <Navbar.Text><b>Status: </b></Navbar.Text>
                     <NavDropdown title="All" id="collasible-nav-dropdown" variant="secondary">
                     <NavDropdown.Item href="#action/3.1">Canine</NavDropdown.Item>
@@ -139,7 +139,23 @@ const SelectAndSendData = ({
                     <NavDropdown title="All" id="collasible-nav-dropdown" variant="secondary">
                     <NavDropdown.Item href="#action/3.1">Canine TD v2</NavDropdown.Item>
                     </NavDropdown>
-                </Nav>
+                </Nav> */}
+                <div className="dropdown margins" style={{float: "right"}}>
+                    <button className="dropbtn">Status</button>
+                    <div className="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+                <div className="dropdown margins" style={{float: "right"}}>
+                    <button className="dropbtn">Updated By</button>
+                    <div className="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
             </div>
             </Navbar.Collapse>
         </Navbar>
