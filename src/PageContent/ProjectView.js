@@ -78,14 +78,15 @@ const FieldsSection = ({
     const handleSaveFields = (data) => {
         const dataWithDetails = {
             "markerId":markerId,
-            "projectId":projectId,
+            "projectId":parseInt(projectId),
             "data":data
         }
         request('POST', "http://202.153.40.2:9500/MCDS/mcds/API/saveMarkerData", setSaveFields, dataWithDetails)
+        setTimeout(() => {window.location.reload()}, 5000);
     }
     return (
         <div>
-            <SuccessMiniModal status={saveFieldsStatus} setStatus={setSaveFields}>
+            <SuccessMiniModal status={saveFieldsStatus} setStatus={setSaveFields} timer={3000}>
                 Success! All fields you changed have been saved!
             </SuccessMiniModal>
             <div className="pull-between margins">
@@ -95,7 +96,6 @@ const FieldsSection = ({
                         className="default-button"
                         onClick={() => {
                             handleSaveFields(data)
-                            navigate('/content/'+projectId)
                         }}
                     >
                         Save Fields

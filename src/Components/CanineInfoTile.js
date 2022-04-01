@@ -19,6 +19,7 @@ function CanineInfoTile (props) {
                 <>
                     <ImageTile
                         imageData={imageData}
+                        img={product?.imagePath || ""}
                     />
                     <Status data={activeProductData} productId={product?.productId || null} />
                     <Recents onClickSummary={props.onClickSummary} onClickContent={props.onClickContent} productId={product?.productId || null} data={mostRecentProjectsData} />

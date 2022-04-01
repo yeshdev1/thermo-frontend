@@ -6,11 +6,12 @@ import { useEffect } from 'react';
 export const SuccessMiniModal = ({
     children,
     status,
-    setStatus
+    setStatus,
+    timer = 5000
 }) => {
     useEffect(() => {
         if (status !== false) {
-            setTimeout(() => {setStatus(false)}, 5000);
+            setTimeout(() => {setStatus(false)}, timer);
         }
     }, [status])
     return (
