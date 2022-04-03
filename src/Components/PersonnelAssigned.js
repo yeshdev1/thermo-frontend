@@ -1,28 +1,48 @@
 import './componentStyles.css';
 import React from 'react';
 
-const PersonnelAssigned  = () => {
+const RenderName = ({
+    type,
+    list
+}) => {
+    return(
+        <div className="PersonnelAssignedList">
+            <span className="PersonnelAssignedContent">{type}</span>
+            {list.map(name => (
+                    <>
+                        <span>{name.split(" ")[0].toLowerCase()}</span>
+                    </>
+                )
+            )}
+        </div>
+    )
+}
+
+const PersonnelAssigned  = ({
+    adminList,
+    approverList,
+    developerList,
+    reviewerList
+}) => {
     return (
         <div className="PersonnelAssignedTile">
-             <div className="header-size">Personnel Assigned</div>
-             <div className="PersonnelAssignedList">
-                 <span className="PersonnelAssignedContent">ADMIN</span>
-                 <span>Srinivas</span>
-             </div>
-             <div className="PersonnelAssignedList">
-                 <span className="PersonnelAssignedContent">APPROVER</span>
-                 <span>Anu</span>
-             </div>
-             <div className="PersonnelAssignedList">
-                 <span className="PersonnelAssignedContent">REVIEWER</span>
-                 <span>Anu</span>
-                 <span>Chaitra</span>
-             </div>
-             <div className="PersonnelAssignedList">
-                 <span className="PersonnelAssignedContent">DEVELOPER</span>
-                 <span>Vaishnavi</span>
-                 <span>Chaitra</span>
-             </div>
+             <div className="tile-header header-size">Personnel Assigned</div>
+             <RenderName
+                type="ADMIN"
+                list={adminList}
+             />
+             <RenderName
+                type="APPROVER"
+                list={approverList}
+             />
+             <RenderName
+                type="DEVELOPER"
+                list={developerList}
+             />
+            <RenderName
+                type="REVIEWER"
+                list={reviewerList}
+             />
         </div>
     )
 }

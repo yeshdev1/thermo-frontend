@@ -23,7 +23,12 @@ function CanineInfoTile (props) {
                     />
                     <Status data={activeProductData} productId={product?.productId || null} />
                     <Recents onClickSummary={props.onClickSummary} onClickContent={props.onClickContent} productId={product?.productId || null} data={mostRecentProjectsData} />
-                    <PersonnelAssigned data={product.userDetails} productId={product?.productId || null} />
+                    <PersonnelAssigned
+                        adminList={product.teamData.adminList}
+                        approverList={product.teamData.approverList}
+                        reviewerList={product.teamData.reviewerList}
+                        developerList={product.teamData.developerList}
+                    />
                 </>
             )
         })

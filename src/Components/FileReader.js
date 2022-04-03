@@ -1,5 +1,4 @@
 import React from 'react';
-import Papa from 'papaparse';
 import '../PageContent/pageContentStyles.css';
 import { fileToBase64 } from '../utils/common';
 

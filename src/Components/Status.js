@@ -37,7 +37,7 @@ const Status = (props) => {
     const productInfoObject = makeObject(data)
     return (
         <div className="Status">
-            <div className="header-size">Active Product</div>
+            <div className="tile-header"><b>Active Product</b></div>
             <div className="breed">{data.name}</div>
             <div className="disorders-traits">
                 <span className="features">
